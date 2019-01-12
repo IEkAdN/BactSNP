@@ -1,12 +1,20 @@
 #include "fuga.h"
 
 void Fuga::Main() {
-  Read();
+  ReadRefFa();
+  ReadPhenixFa();
   Fa2Snp();
 }
 
-void Fuga::Read() {
-  ifstream F(kFNom_);
+void Fuga::ReadRefFa() {
+  ifstream F(kRefFaNom_);
+  string L;
+  getline(F, L);
+  RefChrId_ = L.substr(1, L.find(' ') - 1);
+}
+
+void Fuga::ReadPhenixFa() {
+  ifstream F(kPhenixFaNom_);
   string L;
   getline(F, L);
   getline(F, L);
@@ -24,7 +32,7 @@ void Fuga::Read() {
 }
 
 void Fuga::Fa2Snp() {
-  cout << "pos";
+  cout << "contig\tpos";
   for (auto i = Fa_.begin(); i != Fa_.end(); ++i) {
     cout << "\t" << i->first;
   }
@@ -39,7 +47,7 @@ void Fuga::Fa2Snp() {
     Nuc.erase('-');
     Nuc.erase('N');
     if (Nuc.size() >= 2) {
-      cout << i + 1;
+      cout << RefChrId_ << '\t' << i + 1;
       for (auto j = Fa_.begin(); j != Fa_.end(); ++j) {
         cout << "\t" << j->second.at(i);
       }
