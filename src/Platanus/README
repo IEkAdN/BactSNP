@@ -1,0 +1,306 @@
+Platanus README
+
+***** VERSION *****
+1.2.3
+
+
+***** DESCRIPTION *****
+
+ Platanus is a de novo assembler designed to assemble high-throughput data.
+It can handle highly heterozygotic samples. The following is the assembly
+outline. First, it constructs contigs using the algorithm based on de Bruijn
+graph. Second, the order of contigs is determined according to paired-end
+(mate-pair) data and constructs scaffolds. Finally, paired-end reads localized
+on gaps in scaffolds are assembled and gaps are closed.
+
+
+***** REQUIREMENTS *****
+
+GCC (version >= 4.4)
+OpenMP
+
+
+***** INSTALLATION *****
+
+Command:
+> tar xzfv Platanus_<version>.tar.gz
+> cd Platanus_<version>
+> make
+> cp platanus <installation_path>
+
+
+The command of c++ compiler can be specified by editing "CXX" in Makefile.
+e.g.
+#CXX = g++
+CXX = g++44
+
+
+***** SYNOPSIS *****
+
+> platanus assemble -f PE.fa 2>ass_log.txt
+> platanus scaffold -c out_contig.fa -b out_contigBubble.fa -ip1 PE.fa 2>sca_log.txt
+> platanus gap_close -c out_scaffold.fa -ip1 PE.fa 2>gap_log.txt
+
+
+***** USAGE *****
+
+COMMON OPTIONS
+--------------------------------------------------------------------------------
+
+    -t INT    : Number of threads (<= 100, default 1)
+
+    -o STR    : Prefix of output files (default out, length <= 200)
+
+    -tmp DIR  : directory for temporary files (default . (working directory))
+
+--------------------------------------------------------------------------------
+
+
+
+
+platanus assemble [OPTIONS] 2>log
+--------------------------------------------------------------------------------
+
+    Constructs contigs using the algorithm based on de Bruign graph.
+
+
+    INPUT OPTIONS
+
+    -f FILE1 [FILE2 ...]: Reads file (fasta or fastq format, number <= 100)
+                          The file format is automatically detected.
+                          Quality values are not used.
+ 
+
+    OTHER OPTIONS
+
+    -k INT  : Initial k-mer size (default 32)
+              For low-coverage data, small INT is recommended. 
+
+    -s INT  : Step size of k-mer extension (>= 1, default 10)
+              Smaller INT increase time and may enhance accuracy of contigs.
+
+    -n INT  : Initial k-mer coverage cutoff (default 0, 0 means auto)
+              When "-n 0", the value depends on k-mer occurrence distribution.
+              If k-mer occurrence distribution is abnormal (Ex. contaminated,
+              transcriptome, metagenome, and so on), the value should be set
+              manually.
+
+    -c INT  : Minimum k-mer coverage (default 2)
+              Through assembly, k-mer size increases and coverage cutoff
+              decreases. The coverage cutoff does not fall below INT.
+
+    -a FLOAT: K-mer extension safety level (default 10.0)
+              Smaller FLOAT increases the final k-mer size. If you want to extend
+              contigs at the cost of accuracy, set small FLOAT (Ex. -a 5.0).
+
+    -u FLOAT: Maximum difference for bubble crush (identity, default 0.1)
+              Larger FLOAT increases the number of bubbles merged. If
+              heterozygosity of the sample is high, large FLOAT may be
+              suitable (Ex. -u 0.2).
+
+    -d FLOAT: Maximum difference for branch cutting (coverage ratio, default 0.5)
+              Smaller FLOAT increase the accuracy. If error rate is low, small
+              FLOAT may be suitable (Ex. -d 0.3).
+
+    -m INT  : Memory limit (GB, >= 1, default 16)
+              Programs attempt to make memory usage smaller than INT(GB).
+              If memory usage exceed the limit, programs warn but continue.
+
+
+    OUTPUT FILES
+
+    PREFIX_contig.fa      : assembled contiguous sequences
+
+    PREFIX_contigBubble.fa: merged and removed bubble sequences
+
+    PREFIX_kmerFrq.tsv    : occurrence distribution of k-mers(k is specified by -k option)
+
+--------------------------------------------------------------------------------
+
+
+
+
+platanus scaffold [OPTIONS] 2>log
+--------------------------------------------------------------------------------
+
+     Map paired-end (mate-pair) reads on contigs, determine the order of contigs
+    and construct scaffolds.
+
+
+    INPUT OPTIONS
+
+    -c FILE1 [FILE2 ...]               : Contig_file (fasta format)
+                                         String "cov" in title lines are
+                                         detected and following numbers are
+                                         used as coverage. Even if a title
+                                         does not consits of string "cov",
+                                         Platanus can process the file.
+                                         Ex. out_contig.fa
+
+    -b FILE1 [FILE2 ...]               : Bubble_seq_file (fasta format)
+                                         Ex. out_contigBubble.fa
+
+    -ip{INT} PAIR1 [PAIR2 ...]         : Lib_id inward_pair_file (reads in 1 file, fasta or fastq)
+                                         Ex. -ip1 lib1.fa
+
+    -IP{INT} FWD1 REV1 [FWD2 REV2 ...] : Lib_id inward_pair_files (reads in 2 files, fasta or fastq)
+                                         Ex. -IP1 lib1_1.fa lib1_2.fa
+
+    -op{INT} PAIR1 [PAIR2 ...]         : Lib_id outward_pair_file (reads in 1 file, fasta or fastq)
+                                         Ex. -op1 lib1.fa
+
+    -OP{INT} FWD1 REV1 [FWD2 REV2 ...] : lib_id outward_pair_files (reads in 2 files, fasta or fastq)
+                                         Ex. -OP1 lib1_1.fa lib1_2.fa
+
+                                         The file format is automatically detected.
+                                         see "***** NOTE ***** Paired-end (Mate-pair) input" below
+
+
+    OTHER OPTIONS
+
+    -n{INT} INT:  Lib_id Minimum_insert_size
+                  Platanus automatically estimates insert size of each library.
+                  If a library consists of many short-insert pairs (junks),
+                  the insert size will be underestimated. Pairs in the library
+                  (Lib_id=INT1) that infer short insert size (< INT2) are
+                  discarded and estimated insert size must be > INT2.
+
+    -a{INT} INT : lib_id average_insert_size
+                  Fixed average insert size (INT) is used instead of auto estimation.
+
+    -d{INT} INT : lib_id SD_insert_size
+                  Fixed SD of insert size (INT) is used instead of auto estimation.
+
+    -s INT      : Mapping seed length (default 32)
+                  Seed length must be larger than reads length. Smaller INT
+                  decrease speed.
+
+    -v INT      : Minimum overlap length (default 32)
+                  If adjacent contigs have overlap (length >= INT) and properly
+                  close to each other, the contigs are joined.
+
+    -l INT      : Minimum number of link (default 3)
+                  Platanus first estimates the threshold of link (number) and
+                  makes scaffolds, then decreases the threshold to INT and
+                  extends scaffolds.
+
+    -u FLOAT    : Maximum difference for bubble crush (identity, default 0.1)
+                  Larger FLOAT increases the number of bubbles merged. If
+                  heterozygosity of the sample is high, large FLOAT may be
+                  suitable (Ex. -u 0.2).
+
+
+    OUTPUT FILES
+
+    PREFIX_scaffold.fa          : assembled sequences that include gaps('N's mean gaps)
+
+    PREFIX_scaffoldBubble.fa    : removed bubble sequences
+
+    PREFIX_scaffoldComponent.tsv: the information about composition of scaffolds
+                                  (i.e. which contigs constitute a scaffold)
+
+--------------------------------------------------------------------------------
+
+
+
+
+platanus gap_close [OPTIONS] 2>log
+--------------------------------------------------------------------------------
+
+     Map paired-end(mate-pair) reads on scaffolds, assemble reads localized on
+    gaps and close gaps.
+    
+
+    INPUT OPTIONS
+
+    -c FILE1 [FILE2 ...]               : Scaffold_file (fasta format)
+                                         Ex. out_scaffold.fa
+
+    -ip{INT} PAIR1 [PAIR2 ...]         : Lib_id inward_pair_file (reads in 1 file, fasta or fastq)
+                                         Ex. -ip1 lib1.fa
+
+    -IP{INT} FWD1 REV1 [FWD2 REV2 ...] : Lib_id inward_pair_files (reads in 2 files, fasta or fastq)
+                                         Ex. -IP1 lib1_1.fa lib1_2.fa
+
+    -op{INT} PAIR1 [PAIR2 ...]         : Lib_id outward_pair_file (reads in 1 file, fasta or fastq)
+                                         Ex. -op1 lib1.fa
+
+    -OP{INT} FWD1 REV1 [FWD2 REV2 ...] : lib_id outward_pair_files (reads in 2 files, fasta or fastq)
+                                         Ex. -OP1 lib1_1.fa lib1_2.fa
+
+                                         The file format is automatically detected.
+                                         see "***** NOTE ***** Paired-end (Mate-pair) input" below
+
+
+    OTHER OPTIONS
+
+    -s INT  : Mapping seed length (default 32)
+              Seed length must be larger than reads length. Smaller INT
+              decrease speed.
+
+    -v INT  : Minimum overlap length (default 32)
+              Smaller INT increase the number of gaps closed (Ex. -v 20).
+
+    -e FLOAT: Maximum error rate of overlap (identity, default 0.05)
+              Larger FLOAT increase the number of gaps closed (Ex. -e 0.1).
+
+
+    OUTPUT FILE
+
+    PREFIX_gapClosed.fa: gap-closed scaffold sequences
+
+--------------------------------------------------------------------------------
+
+
+
+
+****** NOTE ******
+
+Paired-end (Mate-pair) input
+---------------------------------------------------------------------------------
+    
+     "platanus scaffold" and "platanus gap_close" require Paired-end (Mate-pair)
+    libraries. Paired-end libraries are classified into "Inward-pair" and
+    "Outward-pair" according to the sequence direction.
+     Libraries that have the same insert size are given the same Lib_id (INT).
+
+
+    Inward-pair data (often called "Paired-end", accepted in options "-ip" or "-IP"):
+
+        FWD --->
+         5' -------------------- 3'
+         3' -------------------- 5'
+                            <--- REV
+
+
+    Outward-pair data (often called "Mate-pair", accepted in options "-op" or "-OP"):
+
+                            ---> REV
+         5' -------------------- 3'
+         3' -------------------- 5'
+        FWD <---
+
+
+    EXAMPLE
+
+        INPUT
+
+        Inward-pair(Insert = 300bp, reads in 1 file): PE300_1_pair.fa PE300_2_pair.fa
+        Inward-pair(Insert = 500bp, reads in 1 file): PE500_pair.fa
+        Outward-pair(Insert = 2kbp, reads in 2 files) : MP2k_fwd.fa MP2k_rev.fa
+
+
+        OPTIONS
+
+        -ip1 PE300_1_pair.fa PE300-2_pair.fa \
+        -ip2 PE500_pair.fa \
+        -OP3 MP2k_fwd.fa MP2k_rev.fa
+
+--------------------------------------------------------------------------------
+
+
+
+
+***** AUTHOR *****
+Rei Kajitani at the Tokyo Institute of Technology wrote key source codes.
+<platanus@bio.titech.ac.jp>

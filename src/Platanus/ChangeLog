@@ -1,0 +1,29 @@
+2015-2-2
+ * Version 1.2.4.
+ * Add -e option (coverage depth of homozygous region) in contig-assembly and scaffolding.
+ * Fix a bug related to inversion in scaffolding.
+
+
+2014-9-1
+ * Version 1.2.3.
+ * Add temporary-file option (-tmp).
+ * Fix a bug that causes an error of insert-size estimation.
+ * Fix a bug in "scaffold" related to reproducibility; sometimes results are different depending on system environments.
+ * Fix a bug in "scaffold" related to bubble-removal.
+ * Fix a bug in "gap_close" related to tip-removal in de Bruijn graph.
+ * Fix a bug in "gap_close" related to the error with -s value (>32).
+ * Improve speed of mapping of reads.
+
+
+2013-11-16
+ * Version 1.2.1.
+ * The second version that are publicly available.
+ * Described in the paper:
+   Kajitani, R. et al. Efficient de novo assembly of highly heterozygous genomes from whole-genome shotgun short reads. Genome Res. 24, 1384–1395 (2014).
+
+
+2012-7-10
+ * Version 1.0.0.
+ * The first version that are publicly available.
+ * Described in the paper:
+   Nikaido, M. et al. Coelacanth genomes reveal signatures for evolutionary transition from water to land. Genome Res. 23, 1740–8 (2013).
