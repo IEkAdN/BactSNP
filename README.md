@@ -173,3 +173,13 @@ Options:
     
 ## Programs used in benchmarks  
 Our programs used in the benchmarks in our paper is availabe at https://github.com/IEkAdN/BactSNP/tree/master/benchmark. The C++ programs can be compiled by `make` command. Simulated data in the benchmarks is available at http://platanus.bio.titech.ac.jp/bactsnp.
+
+## Test suite
+We prepared a test suite at http://platanus.bio.titech.ac.jp/bactsnp. Users and developers can download the data, and check BactSNP works properly by the following commands:  
+
+```
+wget
+tar xf test.tgz
+cd test
+./test.sh
+```
