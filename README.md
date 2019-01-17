@@ -6,7 +6,7 @@ BactSNP is a tool to identify SNPs among bacterial isolates. BactSNP can detect 
 
 ## Installation
 
-BactSNP is currently available only on Linux. Users can download BactSNP as a binary package, a source package, or a source RPM. The binary package only needs to be installed without compiling, but they are not available for all platforms. The source package needs to be compiled and installed. The source RPM needs to be installed using RPM. All packages are available at https://github.com/IEkAdN/BactSNP/releases.
+BactSNP is currently available only on Linux. Users can download BactSNP as a binary package, a source package, or a source RPM package. The binary package only needs to be installed without compiling, but they are not available for all platforms. The source package needs to be compiled and installed. The source RPM needs to be installed using RPM. All packages are available at https://github.com/IEkAdN/BactSNP/releases.
 
 ### required dependencies  
 
