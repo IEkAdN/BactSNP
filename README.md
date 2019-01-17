@@ -35,7 +35,7 @@ make
 cp bactsnp /some/where/in/your/PATH/  
 ```
 
-In the binary package, `make` command only generates the main bash script `bactsnp`, and does not compile any programs.  
+In the binary package, the `make` command only generates the main bash script `bactsnp`, and does not compile any programs.  
 
 ### source package  
 
