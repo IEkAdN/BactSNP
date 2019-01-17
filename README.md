@@ -26,30 +26,32 @@ BactSNP also depends on the following several tools, but they are bundled in the
 - Picard (2.4.1)  
 
 ### binary package  
-`make` command in the binary package generates the main script `bactsnp` based on the path of downloaded package, and does not compile any source codes.  
 
 ```
 wget 
 tar xf bactsnp-x.x.x.linux64.tgz  
 cd bactsnp-x.x.x.linux64  
-make  
+make
+cp bactsnp /some/where/in/your/PATH/  
 ```
+
+In the binary package, `make` command only generates the main bash script `bactsnp`, and does not compile any programs.  
 
 ### source package  
 
 ```
-wget
+wget  
 tar xf bactsnp-x.x.x.src.tgz  
 cd bactsnp-x.x.x.src  
-make
-make install  
+make  
+cp bactsnp /some/where/in/your/PATH/  
 ```
 
 ### source RPM
 
 ```
-wget
-gunzip bactsnp-x.x.x-x.xxx.src.rpm.gz
+wget  
+gunzip bactsnp-x.x.x-x.xxx.src.rpm.gz  
 rpmbuild --rebuild bactsnp-x.x.x-x.xxx.src.rpm  
 rpm -ivh /some/where/bactsnp-x.x.x.*.rpm  
 ```
