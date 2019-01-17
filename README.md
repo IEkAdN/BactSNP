@@ -26,12 +26,13 @@ BactSNP also depends on the following several tools, but they are bundled in the
 - Picard (2.4.1)  
 
 ### binary package  
+`make` command in the binary package generates the main script `bactsnp` based on the path of downloaded package, and does not compile any source codes.  
 
 ```
 wget 
 tar xf bactsnp-x.x.x.linux64.tgz  
 cd bactsnp-x.x.x.linux64  
-make install  
+make  
 ```
 
 ### source package  
