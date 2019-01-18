@@ -15,6 +15,7 @@ BactSNP is currently available only on Linux. Users can download BactSNP as a bi
 - Java (1.8.0_111, ≥1.8 is required for Picard and GATK)  
 - SAMtools (1.3.1)  
 - MUMmer (3.23)  
+- ART (2.5.8)  
 
 Listed in parenthesis are the versions used in our test.  
 BactSNP also depends on the following several tools, but they are bundled in the packages:  
@@ -22,7 +23,6 @@ BactSNP also depends on the following several tools, but they are bundled in the
 - BWA (0.7.15)  
 - Platanus (1.2.4)  
 - Platanus_trim (1.0.7)  
-- ART (2.5.8)    
 - Picard (2.4.1)  
 
 ### binary package  
