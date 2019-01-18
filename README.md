@@ -28,9 +28,9 @@ BactSNP also depends on the following several tools, but they are bundled in the
 ### binary package  
 
 ```
-wget https://github.com/IEkAdN/BactSNP/releases/download/vx.x.x/bactsnp-x.x.x.linux64.tgz
-tar xf bactsnp-x.x.x.linux64.tgz  
-cd bactsnp-x.x.x.linux64  
+wget https://github.com/IEkAdN/BactSNP/releases/download/v1.1.0/bactsnp-1.1.0.linux64.tgz
+tar xf bactsnp-1.1.0.linux64.tgz  
+cd bactsnp-1.1.0.linux64  
 make
 cp bactsnp /some/where/in/your/PATH/  
 ```
@@ -40,9 +40,9 @@ In the binary package, the `make` command only generates the main bash script `b
 ### source package  
 
 ```
-wget  https://github.com/IEkAdN/BactSNP/releases/download/vx.x.x/bactsnp-x.x.x.src.tgz
-tar xf bactsnp-x.x.x.src.tgz  
-cd bactsnp-x.x.x.src  
+wget  https://github.com/IEkAdN/BactSNP/releases/download/v1.1.0/bactsnp-1.1.0.src.tgz
+tar xf bactsnp-1.1.0.src.tgz  
+cd bactsnp-1.1.0.src  
 make  
 cp bactsnp /some/where/in/your/PATH/  
 ```
@@ -50,9 +50,9 @@ cp bactsnp /some/where/in/your/PATH/
 ### source RPM
 
 ```
-wget https://github.com/IEkAdN/BactSNP/releases/download/vx.x.x/bactsnp-x.x.x-x.xxx.src.rpm
-rpmbuild --rebuild bactsnp-x.x.x-x.xxx.src.rpm  
-rpm -ivh /some/where/rpm/was/built/bactsnp-x.x.x-x.xxx.xxx.rpm  
+wget https://github.com/IEkAdN/BactSNP/releases/download/v1.1.0/bactsnp-1.1.0-1.el6.src.rpm
+rpmbuild --rebuild bactsnp-1.1.0-1.el6.src.rpm  
+rpm -ivh /some/where/rpm/was/built/bactsnp-1.1.0-1.xxx.xxx.rpm  
 ```
 
 ## Usage
