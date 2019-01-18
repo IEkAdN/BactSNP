@@ -28,7 +28,7 @@ BactSNP also depends on the following several tools, but they are bundled in the
 ### binary package  
 
 ```
-wget 
+wget https://github.com/IEkAdN/BactSNP/releases/download/vx.x.x/bactsnp-x.x.x.linux64.tgz
 tar xf bactsnp-x.x.x.linux64.tgz  
 cd bactsnp-x.x.x.linux64  
 make
@@ -40,7 +40,7 @@ In the binary package, the `make` command only generates the main bash script `b
 ### source package  
 
 ```
-wget  
+wget  https://github.com/IEkAdN/BactSNP/releases/download/vx.x.x/bactsnp-x.x.x.src.tgz
 tar xf bactsnp-x.x.x.src.tgz  
 cd bactsnp-x.x.x.src  
 make  
@@ -50,10 +50,9 @@ cp bactsnp /some/where/in/your/PATH/
 ### source RPM
 
 ```
-wget  
-gunzip bactsnp-x.x.x-x.xxx.src.rpm.gz  
+wget https://github.com/IEkAdN/BactSNP/releases/download/vx.x.x/bactsnp-x.x.x-x.xxx.src.rpm
 rpmbuild --rebuild bactsnp-x.x.x-x.xxx.src.rpm  
-rpm -ivh /some/where/bactsnp-x.x.x.*.rpm  
+rpm -ivh /some/where/rpm/was/built/bactsnp-x.x.x-x.xxx.xxx.rpm  
 ```
 
 ## Usage
