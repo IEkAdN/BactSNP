@@ -15,7 +15,7 @@ BactSNP is currently available only on Linux. Users can download BactSNP as a bi
 - Java (1.8.0_111, ≥1.8 is required for Picard)  
 - SAMtools (1.3.1)  
 - MUMmer (3.23)  
-- ART (2.5.8)  
+- ART (2.5.8, only required when you input assembled scaffolds instead of reads for some isolates)  
 
 Listed in parenthesis are the versions used in our test.  
 BactSNP also depends on the following several tools, but they are bundled in the packages:  
