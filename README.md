@@ -12,7 +12,7 @@ BactSNP is currently available only on Linux. Users can download BactSNP as a bi
 
 - Perl (5.10.1)  
 - Bash (4.1.2)  
-- Java (1.8.0_111, ≥1.8 is required for Picard and GATK)  
+- Java (1.8.0_111, ≥1.8 is required for Picard)  
 - SAMtools (1.3.1)  
 - MUMmer (3.23)  
 - ART (2.5.8)  
