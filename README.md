@@ -42,7 +42,7 @@ In the binary package, the `make` command only generates the main bash script `b
 ```
 wget  https://github.com/IEkAdN/BactSNP/releases/download/v1.1.0/bactsnp-1.1.0.src.tgz
 tar xf bactsnp-1.1.0.src.tgz  
-cd bactsnp-1.1.0.src  
+cd bactsnp-1.1.0  
 make  
 cp bactsnp /some/where/in/your/PATH/  
 ```
