@@ -26,29 +26,37 @@ export OTHERS_PATH=${ROOT_PATH}/others
 export PATH=${SUB_EXE_PATH}:$PATH
 
 source ${SUB_EXE_PATH}/read_options.sh
+echo "detailed log is printed in <output directory>/bactsnp_out"
 
 module=simulate_reads
   if [ -n "${FA_LST}" ]; then
+    echo "started '${module}' module"
     echo "started '${module}' module" >>${BACTSNP_OUT}
     set +e; xargs -a ${FA_LST} -r -i -P ${JOBS} ${module}.sh {}
     set -e; check_job_status.sh ${module} art ${FA_ISOLATE_LST}
     set -e; check_job_status.sh ${module} sam2fq ${FA_ISOLATE_LST}
+    echo "finished '${module}' module"
     echo "finished '${module}' module" >>${BACTSNP_OUT}
   fi
 
 module=trim_reads
+  echo "started '${module}' module"
   echo "started '${module}' module" >>${BACTSNP_OUT}
   set +e; xargs -a ${FQ_LST} -r -i -P ${JOBS} ${module}.sh {}
   set -e; check_job_status.sh ${module} platanus_trim ${ALL_ISOLATE_LST}
+  echo "finished '${module}' module"
   echo "finished '${module}' module" >>${BACTSNP_OUT}
 
 module=assemble_reads
+  echo "started '${module}' module"
   echo "started '${module}' module" >>${BACTSNP_OUT}
   set +e; xargs -a ${ALL_ISOLATE_LST} -r -i -P ${JOBS} ${module}.sh {}
   set -e; check_job_status.sh ${module} platanus ${ALL_ISOLATE_LST}
+  echo "finished '${module}' module"
   echo "finished '${module}' module" >>${BACTSNP_OUT}
 
 module=map_reads
+  echo "started '${module}' module"
   echo "started '${module}' module" >>${BACTSNP_OUT}
   set +e; ${module}.sh index_ref
   set -e; check_job_status.sh ${module} bwa_index
@@ -56,9 +64,11 @@ module=map_reads
   set -e; check_job_status.sh ${module} bwa_mem ${ALL_ISOLATE_LST}
   set +e; xargs -a ${ALL_ISOLATE_LST} -r -i -P ${JOBS} ${module}.sh rm_duplicate {}
   set -e; check_job_status.sh ${module} markduplicates ${ALL_ISOLATE_LST}
+  echo "finished '${module}' module"
   echo "finished '${module}' module" >>${BACTSNP_OUT}
 
 module=get_pseudo_genomes
+  echo "started '${module}' module"
   echo "started '${module}' module" >>${BACTSNP_OUT}
   set +e; xargs -a ${ALL_ISOLATE_LST} -r -i -P ${JOBS} ${module}.sh run_mapping_mode {}
   set -e; check_job_status.sh ${module} samtools_view ${ALL_ISOLATE_LST}
@@ -75,19 +85,24 @@ module=get_pseudo_genomes
     set -e; check_job_status.sh ${module} mask_region_input ${ALL_ISOLATE_LST}
   fi
   set -e; ${module}.sh get_multi_fa
+  echo "finished '${module}' module"
   echo "finished '${module}' module" >>${BACTSNP_OUT}
 
 module=get_snps
+  echo "started '${module}' module"
   echo "started '${module}' module" >>${BACTSNP_OUT}
   set +e; ${module}.sh
   set -e; check_job_status.sh ${module} fa2snp_wo_ref
   set -e; check_job_status.sh ${module} fa2snp_w_ref
+  echo "finished '${module}' module"
   echo "finished '${module}' module" >>${BACTSNP_OUT}
 
 module=get_replaced_pseudo_genomes
+  echo "started '${module}' module"
   echo "started '${module}' module" >>${BACTSNP_OUT}
   set +e; ${module}.sh
   set -e; check_job_status.sh ${module} snp2fa
+  echo "finished '${module}' module"
   echo "finished '${module}' module" >>${BACTSNP_OUT}
 
 mkdir -p ${OUT_DIR}/mapping_results
@@ -102,8 +117,13 @@ for isolate in $(cat ${ALL_ISOLATE_LST}); do
 done
 
 if [ "${NO_CLEAN}" == false ]; then
+  if [ $REF == ${TMP_DIR}/ref.fa ]; then
+    # for copy of the write-protected reference
+    rm -rf $REF
+  fi
   rm -r ${TMP_DIR}
 fi
 
 echo >>${BACTSNP_OUT}
+echo "bactsnp completed!"
 echo "bactsnp completed!" >>${BACTSNP_OUT}
