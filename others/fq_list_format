@@ -1,0 +1,6 @@
+[name of isolate 1]<tab><[forward fastq of isolate 1]<tab>[reverse fastq of isolate 1]
+[name of isolate 2]<tab><[forward fastq of isolate 2]<tab>[reverse fastq of isolate 2]
+                                           .                                                  
+                                           .                                                  
+                                           .                                                  
+[name of isolate n]<tab><[forward fastq of isolate n]<tab>[reverse fastq of isolate n]

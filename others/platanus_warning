@@ -1,0 +1,2 @@
+Platanus might have failed to set appropriate "initial k-mer coverage cutoff (option -n)" due to low coverage depth
+Do fastq files contain enough amount of reads? We recommend coverage depth of at least 30x
