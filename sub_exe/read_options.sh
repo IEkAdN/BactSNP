@@ -176,6 +176,8 @@ if [ -n "${FA_LST}" ]; then
   which art_illumina >/dev/null
 fi
 
+echo "checking input files..."
+
 if [ -n "${ref}" ]; then
   check_existence ${ref}
 fi
