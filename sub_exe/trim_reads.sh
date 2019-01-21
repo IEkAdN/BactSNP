@@ -53,5 +53,5 @@ fi
 echo "platanus_trim ${fwd_cp_fq} ${rev_cp_fq} -t ${THR} >${platanus_trim_log_prefix}_stdout 2>${platanus_trim_log_prefix}_stderr" >>${BACTSNP_OUT}
       platanus_trim ${fwd_cp_fq} ${rev_cp_fq} -t ${THR} >${platanus_trim_log_prefix}_stdout 2>${platanus_trim_log_prefix}_stderr
 touch ${platanus_trim_log_prefix}.done
-rm ${fwd_cp_fq}
-rm ${rev_cp_fq}
+rm -f ${fwd_cp_fq}
+rm -f ${rev_cp_fq}
