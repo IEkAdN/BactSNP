@@ -96,7 +96,7 @@ Options:
 
     TSV file to specify the name and the assembly-data file (FASTA) of each isolate. Use this option when you do not have read data for some isolates. BactSNP simulates sequence reads from the input assembly and use them in the same way as the real sequence data. See `others/fa_list_format`.  
 
-+ `--reference_strain STR`  
++ `--ref_strain STR`  
 
     Name of a taget isolate used as a reference. BactSNP de novo assembles the genome of the specified isolate and uses it as the reference genome.  
 
@@ -112,7 +112,7 @@ Options:
 
     If allele frequency is smaller than this value, an ambiguous allele is called.  
 
-+ `--depth FLOAT (default: 10)`  
++ `--depth INT (default: 10)`  
 
     If coverage depth is smaller than this value, an ambiguous allele is called.  
 
