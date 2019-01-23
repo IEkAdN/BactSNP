@@ -14,17 +14,23 @@ BactSNP is currently available only on Linux. Users can download BactSNP as a bi
 - Bash (4.1.2)  
 - Java (1.8.0_111, ≥1.8 is required for Picard)  
 - SAMtools (1.3.1)  
+    http://www.htslib.org/  
 - MUMmer (3.23)  
+    http://mummer.sourceforge.net/  
 - ART (2.5.8, only required when you input assembled scaffolds instead of reads for some isolates)  
-
+    https://www.niehs.nih.gov/research/resources/software/biostatistics/art/index.cfm  
 Listed in parenthesis are the versions used in our test.  
 BactSNP also depends on the following several tools, but they are bundled in the packages:  
   
 - BWA (0.7.15)  
+    http://bio-bwa.sourceforge.net/  
 - Platanus (1.2.4)  
+    http://platanus.bio.titech.ac.jp/platanus-assembler  
 - Platanus_trim (1.0.7)  
+    http://platanus.bio.titech.ac.jp/pltanus_trim  
 - Picard (2.4.1)  
-
+    https://broadinstitute.github.io/picard/  
+    
 ### binary package  
 
 ```
