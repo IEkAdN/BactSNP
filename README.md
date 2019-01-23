@@ -19,6 +19,7 @@ BactSNP is currently available only on Linux. Users can download BactSNP as a bi
     http://mummer.sourceforge.net/  
 - ART (2.5.8, only required when you input assembled scaffolds instead of reads for some isolates)  
     https://www.niehs.nih.gov/research/resources/software/biostatistics/art/index.cfm  
+    
 Listed in parenthesis are the versions used in our test.  
 BactSNP also depends on the following several tools, but they are bundled in the packages:  
   
